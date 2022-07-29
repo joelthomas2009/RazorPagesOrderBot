@@ -52,7 +52,6 @@ namespace OrderBot
                     break;
                 case State.THANKYOU:
                     this.oOrder.Drink = sInMessage;
-                    aMessages.Add("Thank you for ordering with Penny's Hot Chicken!");
                     aMessages.Add("Please confirm the order items and type \"pay\":");
                     aMessages.Add($"1. {this.oOrder.BurgerType} Burger");
                     aMessages.Add($"2. Side item: {this.oOrder.SideItem}");
@@ -71,6 +70,7 @@ namespace OrderBot
                     DateTime now = DateTime.Now;
                     DateTime orderConfirmTime = now.AddMinutes(30);
                     aMessages.Add("Sit back and relax!");
+                    aMessages.Add("Thank you for ordering with Penny's Hot Chicken!");
                     aMessages.Add($"Your order will be delivered at {orderConfirmTime.ToString("F")}");
                     break;
             }

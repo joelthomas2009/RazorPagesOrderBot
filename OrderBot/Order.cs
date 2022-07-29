@@ -4,9 +4,13 @@ namespace OrderBot
 {
     public class Order : ISQLModel
     {
-        private string _size = String.Empty;
+        private string _burgerType = String.Empty;
         private string _phone = String.Empty;
-
+        private string _name = String.Empty;
+        private string _sideItem = String.Empty;
+        private string _drink = String.Empty;
+        private string _size = String.Empty;
+    
         public string Phone{
             get => _phone;
             set => _phone = value;
@@ -17,6 +21,25 @@ namespace OrderBot
             set => _size = value;
         }
 
+        public string BurgerType{
+            get => _burgerType;
+            set => _burgerType = value;
+        }
+
+        public string Name{
+            get => _name;
+            set => _name = value;
+        }
+
+        public string SideItem{
+            get => _sideItem;
+            set => _sideItem = value;
+        }
+
+        public string Drink{
+            get => _drink;
+            set => _drink = value;
+        }
         public void Save(){
            using (var connection = new SqliteConnection(DB.GetConnectionString()))
             {

@@ -55,18 +55,6 @@ namespace OrderBot
                 commandUpdate.Parameters.AddWithValue("$size", Size);
                 commandUpdate.Parameters.AddWithValue("$phone", Phone);
                 int nRows = commandUpdate.ExecuteNonQuery();
-                if(nRows == 0){
-                    var commandInsert = connection.CreateCommand();
-                    commandInsert.CommandText =
-                    @"
-            INSERT INTO orders(size, phone)
-            VALUES($size, $phone)
-        ";
-                    commandInsert.Parameters.AddWithValue("$size", Size);
-                    commandInsert.Parameters.AddWithValue("$phone", Phone);
-                    int nRowsInserted = commandInsert.ExecuteNonQuery();
-
-                }
             }
 
         }

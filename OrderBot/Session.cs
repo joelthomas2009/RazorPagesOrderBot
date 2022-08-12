@@ -11,7 +11,7 @@ namespace OrderBot
 
         private State nCur = State.WELCOMING;
         private Order oOrder;
-        public string Name {get; set;}
+        public string PhoneNumber {get; set;}
 
         public Session(string sPhone)
         {
@@ -35,8 +35,9 @@ namespace OrderBot
                     this.nCur = State.PHONE;
                     break;
                 case State.PHONE:
-                    string sProtein = sInMessage;
-                    aMessages.Add("Great! What type of burger would you like?");
+                    PhoneNumber = sInMessage;
+                    aMessages.Add($"Great! The phone number {PhoneNumber} is successfully added!\n");
+                    aMessages.Add($"What type of burger would you like?");
                     this.nCur = State.BURGER_TYPE;
                     break;
                 case State.BURGER_TYPE:
@@ -47,28 +48,23 @@ namespace OrderBot
                     break;
                 case State.DRINK:
                     this.oOrder.SideItem = sInMessage;
+                    this.oOrder.Size = "";
                     aMessages.Add("What drink would you like on this  " + this.oOrder.Size + " burger with " + this.oOrder.SideItem + "?");
                     this.nCur = State.THANKYOU;
                     break;
                 case State.THANKYOU:
                     this.oOrder.Drink = sInMessage;
-                    aMessages.Add("Please confirm the order items and type \"pay\":");
+                    aMessages.Add("Please confirm the order items and type \"confirm\":");
                     aMessages.Add($"1. {this.oOrder.BurgerType} Burger");
                     aMessages.Add($"2. Side item: {this.oOrder.SideItem}");
-                    aMessages.Add($"2. Drink: {this.oOrder.Drink}");
-                    this.nCur = State.PAYMENT;
-                    break;
-                case State.PAYMENT:
-                    aMessages.Add("Please enter the credit card details:");
-                    this.nCur = State.CVV;
-                    break;
-                case State.CVV:
-                    aMessages.Add("Please enter the credit card cvv details:");
+                    aMessages.Add($"3. Drink: {this.oOrder.Drink}");
                     this.nCur = State.ORDERCONFIRM;
+                    this.oOrder.Save();
                     break;
                 case State.ORDERCONFIRM:
                     DateTime now = DateTime.Now;
                     DateTime orderConfirmTime = now.AddMinutes(30);
+                    this.oOrder.Save();
                     aMessages.Add("Sit back and relax!");
                     aMessages.Add("Thank you for ordering with Penny's Hot Chicken!");
                     aMessages.Add($"Your order will be delivered at {orderConfirmTime.ToString("F")}");
